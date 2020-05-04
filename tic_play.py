@@ -1,10 +1,10 @@
 from tic_main import Board, Agent
 
-empty_grid = [
-    [" ", " ", " "],
-    [" ", " ", " "],
-    [" ", " ", " "]
-]
+empty_grid = {
+'1,1': ' ', '1,2': ' ', '1,3': ' ',
+'2,1': ' ', '2,2': ' ', '2,3': ' ',
+'3,1': ' ', '3,2': ' ', '3,3': ' '
+}
 
 def play_game():
     game = Board(empty_grid)
