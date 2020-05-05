@@ -22,20 +22,22 @@ class Bot(Agent):
         for move in board.moves():
             new_board = Board(board.grid.copy())
             new_board.change_state(self.piece, move)
-            utility = self.min_value(new_board)
+            utility = self.min_value(new_board, -2, 2)
             if utility > v:
                 v = utility
                 best_move = move
         return best_move
 
 
-    def max_value(self, board):
+    def max_value(self, board, alpha, beta):
         """
         Returns:
             a utility value of the best state for player MAX
             and the action leading to it.
         
         board: the current instance of board class.
+        alpha: the utility value of the best move found so far for player MAX.
+        beta: the utility value of the best move found so far for player MIN.
         """
         if board.winning(self.opponent_piece()):
             return -1
@@ -45,18 +47,21 @@ class Bot(Agent):
         for move in board.moves():
             new_board = Board(board.grid.copy())
             new_board.change_state(self.piece, move)
-            utility = self.min_value(new_board)
-            if utility > v:
-                v = utility
+            v = max(v, self.min_value(new_board, alpha, beta))
+            if v >= beta:
+                return v
+            alpha = max(alpha, v)
         return v
     
-    def min_value(self, board):
+    def min_value(self, board, alpha, beta):
         """
         Returns:
             a utility value of the best state for player MIN
             and the action leading to it.
         
         board: the current instance of board class.
+        alpha: the utility value of the best move found so far for player MAX.
+        beta: the utility value of the best move found so far for player MIN.
         """
         if board.winning(self.piece):
             return 1
@@ -66,7 +71,8 @@ class Bot(Agent):
         for move in board.moves():
             new_board = Board(board.grid.copy())
             new_board.change_state(self.opponent_piece(), move)
-            utility = self.max_value(new_board)
-            if utility < v:
-                v = utility
+            v = min(v, self.max_value(new_board, alpha, beta))
+            if v <= alpha:
+                return v
+            alpha = min(beta, v)
         return v
