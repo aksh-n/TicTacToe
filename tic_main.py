@@ -69,6 +69,13 @@ class Board:
         if count == 9:
             return True
         return False
+        
+    def moves(self):
+        moves = []
+        for move, piece in self.grid.items():
+            if piece == " ":
+                moves += [move]
+        return moves
 
 
 
