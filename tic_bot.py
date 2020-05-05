@@ -5,7 +5,7 @@ class Bot(Agent):
     def play_move(self, board):
         move = self.minimax_decision(board)
         board.change_state(self.piece, move)
-        
+
     def opponent_piece(self):
         if self.piece == "X":
             return "O"
@@ -22,7 +22,7 @@ class Bot(Agent):
         for move in board.moves():
             new_board = Board(board.grid.copy())
             new_board.change_state(self.piece, move)
-            utility, _ = self.min_value(new_board)
+            utility = self.min_value(new_board)
             if utility > v:
                 v = utility
                 best_move = move
@@ -38,18 +38,17 @@ class Bot(Agent):
         board: the current instance of board class.
         """
         if board.winning(self.opponent_piece()):
-            return -1, None
+            return -1
         elif board.draw():
-            return 0, None
+            return 0
         v = -2 # Can be any negative value smaller than -1.
         for move in board.moves():
             new_board = Board(board.grid.copy())
             new_board.change_state(self.piece, move)
-            utility, _ = self.min_value(new_board)
+            utility = self.min_value(new_board)
             if utility > v:
                 v = utility
-                best_move = move
-        return v, best_move
+        return v
     
     def min_value(self, board):
         """
@@ -60,15 +59,14 @@ class Bot(Agent):
         board: the current instance of board class.
         """
         if board.winning(self.piece):
-            return 1, None
+            return 1
         elif board.draw():
-            return 0, None
+            return 0
         v = +2 # Can be any positive value greater than 1.
         for move in board.moves():
             new_board = Board(board.grid.copy())
             new_board.change_state(self.opponent_piece(), move)
-            utility, _ = self.max_value(new_board)
+            utility = self.max_value(new_board)
             if utility < v:
                 v = utility
-                best_move = move
-        return v, best_move
+        return v

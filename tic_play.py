@@ -41,6 +41,7 @@ def play_game():
             p1 = Bot("X")
             p2 = Bot("O")
     
+    game.display_state()
     while True:
         p1.play_move(game)
         game.display_state()
