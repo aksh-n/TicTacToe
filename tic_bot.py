@@ -1,4 +1,21 @@
-from tic_main import Board, Agent
+from tic_main import Board
+
+class Agent:
+    # Initializer / Instance Attributes
+    def __init__(self, piece):
+        self.piece = piece
+    
+    def play_move(self, board):
+        """
+        Agent plays his piece on the designated empty space
+
+        board: the current instance of board class.
+        """
+        print("Player " + self.piece + ":")
+        failure = True
+        while failure:
+            location = input("Enter location of placement in the form of x,y: ")
+            failure = not board.change_state(self.piece, location)
 
 
 class Bot(Agent):
@@ -75,3 +92,4 @@ class Bot(Agent):
                 return v, best_move
             beta = min(beta, v)
         return v, best_move
+
