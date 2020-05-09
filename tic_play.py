@@ -1,5 +1,5 @@
-from tic_main import Board, Agent
-from tic_bot import Bot
+from tic_main import Board
+from tic_bot import Agent, Bot
 
 empty_grid = {
 '1,1': ' ', '1,2': ' ', '1,3': ' ',
@@ -62,3 +62,4 @@ def play_game():
 
 
 play_game()
+
