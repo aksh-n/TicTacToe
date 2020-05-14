@@ -71,6 +71,10 @@ class Board:
         return False
         
     def moves(self):
+        """
+        Returns:
+            Array of available moves.
+        """
         moves = []
         for move, piece in self.grid.items():
             if piece == " ":
