@@ -19,14 +19,22 @@ class Agent:
 
 
 class Bot(Agent):
+    # Initializer / Instance Attributes
+    def __init__(self, piece):
+        super().__init__(piece)
+        if self.piece == "X":
+            self.opponent_piece = "O"
+        else:
+            self.opponent_piece = "X"
+    
     def play_move(self, board):
+        """
+        Bot plays his piece on the designated empty space
+
+        board: the current instance of board class.
+        """
         move = self.minimax_decision(board)
         board.change_state(self.piece, move)
-
-    def opponent_piece(self):
-        if self.piece == "X":
-            return "O"
-        return "X"
     
     def minimax_decision(self, board):
         """
@@ -49,7 +57,7 @@ class Bot(Agent):
         alpha: the utility value of the best move found so far for player MAX.
         beta: the utility value of the best move found so far for player MIN.
         """
-        if board.winning(self.opponent_piece()):
+        if board.winning(self.opponent_piece):
             return -1, None
         elif board.draw():
             return 0, None
@@ -83,7 +91,7 @@ class Bot(Agent):
         v = +2 # Can be any positive value greater than 1.
         for move in board.moves():
             new_board = Board(board.grid.copy())
-            new_board.change_state(self.opponent_piece(), move)
+            new_board.change_state(self.opponent_piece, move)
             utility, _ = self.max_value(new_board, alpha, beta)
             if utility < v:
                 v = utility
