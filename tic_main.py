@@ -44,7 +44,7 @@ class Board:
             pass
         return False
     
-    def winning(self, piece): 
+    def winning(self, piece, units=units): 
         """
         Returns:
             True when a player has won; else False.
@@ -64,7 +64,7 @@ class Board:
         """
         count = 0
         for cell in self.grid.values():
-            if  cell == "O" or cell == "X":
+            if  cell != " ":
                 count += 1
         if count == 9:
             return True
