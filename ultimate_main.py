@@ -19,7 +19,7 @@ class Ultimate_Board:
         self.boards = boards
         self.main_board = main_board
         self.forced_board = None # Board to be played at by the next player.
-        self.last_board = None # Board played at last move.
+        self.last_board = "A" # Board played at last move.
     
     def display_state(self):
         """
@@ -76,18 +76,18 @@ class Ultimate_Board:
     
     def winning(self, piece):
         """
-        Combines winning_main and winning_sub.
+        Combines _winning_main and _winning_sub.
         Tracks individual boards and checks winning condition.
         Returns:
             True when a player has won; else False.
         
         piece: string taking one of two values X or O.
         """
-        if self.winning_sub(piece, self.last_board):
-            return self.winning_main(piece)
+        if self._winning_sub(piece, self.last_board):
+            return self._winning_main(piece)
         return False
 
-    def winning_main(self, piece):
+    def _winning_main(self, piece):
         """
         Returns:
             True when a player has won; else False.
@@ -96,7 +96,7 @@ class Ultimate_Board:
         """
         return self.main_board.winning(piece, units)
     
-    def winning_sub(self, piece, board):
+    def _winning_sub(self, piece, board):
         """
         Updates the main_board to track individual boards won.
         Returns:
@@ -118,30 +118,27 @@ class Ultimate_Board:
         location: string in the from of x,y.
         where x is the row and y is the column number.
         """
-        board = l[location]
-        if self.main_board.grid[board] == " ":
-            return board
-        return False
+        return l[location]
     
     def draw(self):
         """
-        Combines winning_main and winning_sub.
-        Tracks individual boards and checks winning condition.
+        Combines _draw_main and _draw_sub.
+        Tracks individual boards and checks drawing condition.
+        To be used after winning condition is checked.
         Returns:
             True when game has drawn; else False.
         """
-        if self.draw_sub(self.last_board):
-            return self.draw_main()
-        return False
+        self._draw_sub(self.last_board)
+        return self._draw_main()
 
-    def draw_main(self):
+    def _draw_main(self):
         """
         Returns:
             True when game is drawn; else False.
         """
         return self.main_board.draw()
     
-    def draw_sub(self, board):
+    def _draw_sub(self, board):
         """
         Updates the main_board to track individual boards drawn.
         Returns:
@@ -164,3 +161,15 @@ class Ultimate_Board:
             if piece == " ":
                 available_boards += [board]
         return available_boards
+    
+    def _create_copy(self, board):
+        """
+        Returns:
+            A new copy of the instance of Ultimate_Board Class.
+        
+        board: board identified by an alphabet.
+        """
+        new_main = Board(self.main_board.grid.copy())
+        new_boards = self.boards.copy()
+        new_boards[board] = Board(new_boards[board].grid.copy())
+        return Ultimate_Board(new_boards, new_main)

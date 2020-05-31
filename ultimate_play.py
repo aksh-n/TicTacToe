@@ -1,6 +1,6 @@
 from ultimate_main import Ultimate_Board
 from tic_main import Board
-from ultimate_bot import Agent, RandomBot
+from ultimate_bot import Agent, RandomBot, Bot
 
 letters = "ABCDEFGHI"
 empty_grid = {
@@ -26,8 +26,10 @@ boards = {
 options = """
 Please choose from the below options:
 1) Human VS Human
-2) Human VS Bot
-3) Bot VS Bot
+2) Human VS RandomBot
+3) Human VS Bot
+4) Bot VS RandomBot
+5) RandomBot VS RandomBot
 """
 
 def play_game():
@@ -36,7 +38,7 @@ def play_game():
     opt = None
     print("Welcome! \n")
 
-    while opt not in ("1", "2", "3"):
+    while opt not in ("1", "2", "3", "4", "5"):
         print(options)
         opt = input("Enter option: ")
         if opt == "1":
@@ -53,6 +55,26 @@ def play_game():
                     p1 = RandomBot("X")
                     p2 = Agent("O")
         elif opt == "3":
+            piece = None
+            while piece not in ("X", "O"):
+                piece = input("Choose between X and O for the human: ")
+                if piece == "X":
+                    p1 = Agent("X")
+                    p2 = Bot("O")
+                elif piece == "O":
+                    p1 = Bot("X")
+                    p2 = Agent("O")
+        elif opt == "4":
+            piece = None
+            while piece not in ("X", "O"):
+                piece = input("Choose between X and O for the RandomBot: ")
+                if piece == "X":
+                    p1 = RandomBot("X")
+                    p2 = Bot("O")
+                elif piece == "O":
+                    p1 = Bot("X")
+                    p2 = RandomBot("O")
+        elif opt == "5":
             p1 = RandomBot("X")
             p2 = RandomBot("O")
     while True:
