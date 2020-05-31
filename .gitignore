@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 test_bot.py
 test_extreme.py
+test_input
+.vscode/settings.json
